@@ -4,16 +4,14 @@
 #define TXT 1024
 #define WORD 30
 
-int Anagram() {
-    char word[WORD] = "bee";
+int Anagram(char * ch, char * word) {
     char copy[WORD] = "";
     strcpy(copy, word);
-    char ch[TXT] = "I’m bringing home my baby bumble bee Won’t my Mommy be so proud of me I’m bringing home my baby bumble bee    – OUCH!! It stung me!!~";
     int space = 0;
     int bool = 0;
     int enter = 0;
     int first = 0;
-    int size = sizeof(ch) / sizeof(char);
+    int size = strlen(ch);
     for (int i = 0; i < size && i < TXT - 1; i++) {
         enter = 0;
         for (int j = 0; j < strlen(copy) + space && j < WORD - 1; j++) {
@@ -52,12 +50,10 @@ int Anagram() {
     return 0;
 }
 
-int main() {
-    /*
-    char word[WORD] = "abcd";
-    char ch[TXT] = "AbcdaBcf74'dsGs6ab Dc4";
+int Gimetria (char * ch, char * word) {
+
     int target = 0;
-    int size = sizeof(word) / sizeof(char);
+    int size = strlen(word);
     for (int i = 0; i < size; i++) {
         if ((int) word[i] >= 65 && (int) word[i] <= 90) {
             target = target + ((int) word[i] - 64);
@@ -69,7 +65,7 @@ int main() {
     }
     int tmp = 0;
     int counter = 0;
-    size = sizeof(ch) / sizeof(char);
+    size = strlen(ch);
     int last_indx = 0;
     //int wordSize = sizeof(word) / sizeof(char);
     for (int i = 0; i < size && i < TXT - 1; i++) {
@@ -107,10 +103,32 @@ int main() {
             }
         }
     }
+    return 0;
+}
+
+int main() {
 
 
-     */
-    Anagram();
+
+
+
+
+    char word[WORD] = "bee";
+    //char copy[WORD] = "";
+    //strcpy(copy, word);
+    char ch[TXT] = "I’m bringing home my baby bumble bee Won’t my Mommy be so proud of me I’m bringing home my baby bumble bee    – OUCH!! It stung me!!~";
+    char* ptrCh = &ch[0];
+    char* ptrWord = &word[0];
+    Anagram(ptrCh, ptrWord);
+    printf("\n");
+
+    char word2[WORD] = "abcd";
+    char ch2[TXT] = "AbcdaBcf74'dsGs6ab Dc4";
+
+    ptrCh = &ch2[0];
+    ptrWord = &word2[0];
+
+    Gimetria(ptrCh, ptrWord);
 
     return 0;
 
