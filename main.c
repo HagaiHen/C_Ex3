@@ -14,6 +14,9 @@ int Anagram(char *ch, char *word) {
     int size = strlen(ch);
     for (int i = 0; i < size && i < TXT - 1; i++) {
         enter = 0;
+        if (ch[i] == '~') {
+            break;
+        }
         for (int j = 0; j < strlen(copy) + space && j < WORD - 1; j++) {
             if (ch[i] == copy[j]) {
                 bool++;
@@ -27,6 +30,7 @@ int Anagram(char *ch, char *word) {
                 }
             }
             if ((space != 0 || bool != 0) && enter == 0 && j + 1 == strlen(copy)) {
+                i = i - bool;
                 bool = 0;
                 space = 0;
                 strcpy(copy, word);
@@ -38,7 +42,10 @@ int Anagram(char *ch, char *word) {
                 printf("~");
             }
             for (int k = i - space - bool + 1; k <= i; k++) {
-                printf("%c", ch[k]);
+                if (k == i - space - bool + 1 && ch[k] == ' ') {
+                } else {
+                    printf("%c", ch[k]);
+                }
 
             }
             i = i - 2;
@@ -70,7 +77,14 @@ int Gimetria(char *ch, char *word) {
     //int wordSize = sizeof(word) / sizeof(char);
     for (int i = 0; i < size && i < TXT - 1; i++) {
         tmp = 0;
+        if (ch[i] == '~') {
+            i = TXT - 1;
+        }
         for (int j = i; j < i + WORD - 1; j++) {
+            if (ch[j] == '~') {
+                i = TXT - 1;
+                break;
+            }
             if (tmp == target &&
                 (((int) ch[i] >= 65 && (int) ch[j] <= 90) || ((int) ch[i] >= 97 && (int) ch[j] <= 122))) {
                 if (counter >= 1) {
@@ -86,22 +100,18 @@ int Gimetria(char *ch, char *word) {
                     break;
                 }
             }
-            if (ch[j] == '~') {
-                break;
-            } else {
-                if ((int) ch[j] >= 65 && (int) ch[j] <= 90) {
-                    if (tmp < target) {
-                        tmp = tmp + ((int) ch[j] - 64);
-                        last_indx = j;
-                    } else {
-                        break;
-                    }
+            if ((int) ch[j] >= 65 && (int) ch[j] <= 90) {
+                if (tmp < target) {
+                    tmp = tmp + ((int) ch[j] - 64);
+                    last_indx = j;
                 } else {
-                    if ((int) ch[j] >= 97 && (int) ch[j] <= 122) {
-                        if (tmp < target) {
-                            tmp = tmp + ((int) ch[j] - 96);
-                            last_indx = j;
-                        }
+                    break;
+                }
+            } else {
+                if ((int) ch[j] >= 97 && (int) ch[j] <= 122) {
+                    if (tmp < target) {
+                        tmp = tmp + ((int) ch[j] - 96);
+                        last_indx = j;
                     }
                 }
             }
@@ -109,11 +119,6 @@ int Gimetria(char *ch, char *word) {
     }
     return 0;
 }
-
-#include <stdio.h>
-#include <string.h>
-
-#define WORD 30
 
 char MakeItAtbash(char c) {
     int ascii = c;
@@ -178,10 +183,16 @@ int Atbash(char *ch, char *word) {
 
 int main() {
 
-    char word[WORD] = "bee";
+    char word[WORD] = "Head";
     //char copy[WORD] = "";
     //strcpy(copy, word);
-    char ch[TXT] = "I’m bringing home my baby bumble bee Won’t my Mommy be so proud of me I’m bringing home my baby bumble bee    – OUCH!! It stung me!!~";
+    char ch[TXT] = "Head, shoulders, knees and toes,\n"
+                   "Knees and toes.\n"
+                   "Head, shoulders, knees and toes,\n"
+                   "Knees and toes.\n"
+                   "And eyes, and ears, and mouth, and nose.\n"
+                   "Head, shoulders, knees and toes,\n"
+                   "Knees and toes.~";
     char *ptrCh = &ch[0];
     char *ptrWord = &word[0];
     Anagram(ptrCh, ptrWord);
@@ -195,7 +206,7 @@ int main() {
 
     Gimetria(ptrCh, ptrWord);
     printf("\n");
-    Atbash(ptrCh2, ptrWord2);
+    //Atbash(ptrCh2, ptrWord2);
 
     return 0;
 
