@@ -225,8 +225,8 @@ int main() {
         }
         ch[i] = tmp;
     }
-    char *ptrCh = &ch;
-    char *ptrWord = &word;
+    char *ptrCh = &ch[0];
+    char *ptrWord = &word[0];
     printf("Gematria Sequences: ");
     Gimetria(ptrCh, ptrWord);
     printf("\n");
