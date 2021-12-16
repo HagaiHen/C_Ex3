@@ -21,7 +21,7 @@ int Anagram(char *ch, char *word) {
             if (ch[i] == copy[j]) {
                 bool++;
                 enter = 1;
-                copy[j] = "";
+                copy[j] = '0';
                 break;
             } else {
                 if (ch[i] == ' ') {
@@ -74,17 +74,12 @@ int Gimetria(char *ch, char *word) {
     int counter = 0;
     size = strlen(ch);
     int last_indx = 0;
-    //int wordSize = sizeof(word) / sizeof(char);
     for (int i = 0; i < size && i < TXT - 1; i++) {
         tmp = 0;
         if (ch[i] == '~') {
             i = TXT - 1;
         }
         for (int j = i; j < i + WORD - 1; j++) {
-//            if (ch[j] == '~') {
-//                i = TXT - 1;
-//                break;
-//            }
             if (tmp == target &&
                 (((int) ch[i] >= 65 && (int) ch[i] <= 90) || ((int) ch[i] >= 97 && (int) ch[i] <= 122))) {
                 if (counter >= 1) {
@@ -179,7 +174,7 @@ int Atbash(char *ch, char *word) {
             tilda++;
             for (int k = 0; k < sizeword; k++) {
                 printf("%c", tmpWORD[k]);
-                tmpWORD[k] = "";
+                tmpWORD[k] = '0';
             }
         }
         finalcheck = 0;
@@ -208,7 +203,7 @@ int Atbash(char *ch, char *word) {
                     tilda++;
                     for (int k = 0; k < sizeword; k++) {
                         printf("%c", tmpWORD[k]);
-                        tmpWORD[k] = "";
+                        tmpWORD[k] = '0';
                     }
                 }
             }
