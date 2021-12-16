@@ -5,7 +5,7 @@
 #define WORD 30
 
 int Anagram(char *ch, char *word) {
-    char copy[WORD] = "";
+    char copy[WORD];
     strcpy(copy, word);
     int space = 0;
     int bool = 0;
@@ -21,7 +21,7 @@ int Anagram(char *ch, char *word) {
             if (ch[i] == copy[j]) {
                 bool++;
                 enter = 1;
-                copy[j] = '\0';
+                copy[j] = "";
                 break;
             } else {
                 if (ch[i] == ' ') {
@@ -81,12 +81,12 @@ int Gimetria(char *ch, char *word) {
             i = TXT - 1;
         }
         for (int j = i; j < i + WORD - 1; j++) {
-            if (ch[j] == '~') {
-                i = TXT - 1;
-                break;
-            }
+//            if (ch[j] == '~') {
+//                i = TXT - 1;
+//                break;
+//            }
             if (tmp == target &&
-                (((int) ch[i] >= 65 && (int) ch[j] <= 90) || ((int) ch[i] >= 97 && (int) ch[j] <= 122))) {
+                (((int) ch[i] >= 65 && (int) ch[i] <= 90) || ((int) ch[i] >= 97 && (int) ch[i] <= 122))) {
                 if (counter >= 1) {
                     printf("~");
                 }
@@ -96,7 +96,7 @@ int Gimetria(char *ch, char *word) {
                 }
                 break;
             } else {
-                if (tmp > target) {
+                if (tmp > target || tmp == target) {
                     break;
                 }
             }
@@ -144,67 +144,102 @@ char MakeItAtbash(char c) {
 int Atbash(char *ch, char *word) {
     int sizeword = strlen(word);
     int sizech = strlen(ch);
-    char tmpWORD[WORD];
+    char tmpWORD[WORD] = "";
+    int ptr = 0;
+    int finalcheck = 0;
+    int tilda = 0;
+    char copy[WORD] = "";
+    strcpy(copy, word);
     for (int i = 0; i < sizeword; i++) {
-        word[i] = MakeItAtbash(word[i]);
+        copy[i] = MakeItAtbash(copy[i]);
     }
-    for (int i = 0; i < sizech; i++) {
-        if (ch[i] == word[0]) {
-            for (int j = 0; j < sizeword; j++) {
-                if (ch[i + j] == word[j]) {
-                    tmpWORD[j] = word[j];
-                } else { memset(tmpWORD, 0, sizeword); }
-            }
-            if (strlen(tmpWORD) == sizeword) {
-                for (int j = 0; j < sizeword; j++) {
-                    printf("%c", tmpWORD[j]);
-                    tmpWORD[j] = '\0';
+    for (int i = 0; i < sizech; i++) {                  //run all over TXT
+        if (ch[i] == copy[0]) {                     // check if it's the first letter of WORD
+            for (int k = 0; k < sizeword; k++) {
+                for (int t = 0; t < sizeword; t++) {
+                    if (ch[i + k] == copy[t]) {
+                        tmpWORD[ptr] = copy[t];
+                        ptr = ptr + 1;
+                    }
                 }
             }
         }
-        if (ch[i] == word[sizeword]) {
-            for (int j = 0; j < sizeword; j++) {
-                if (ch[sizeword - i] == word[sizeword - j]) {
-                    tmpWORD[j] = word[sizeword - j];
-                } else { memset(tmpWORD, 0, sizeword); }
-            }
-            if (strlen(tmpWORD) == sizeword) {
-                for (int j = 0; j < sizeword; j++) {
-                    printf("%c", tmpWORD[j]);
-                    tmpWORD[j] = '\0';
+        ptr = 0;                                    // reset ptr for the next check
+        if (strlen(tmpWORD) == sizeword) {
+            for (int k = 0; k < sizeword; k++) {
+                if (tmpWORD[k] == copy[k]) {
+                    finalcheck++;
                 }
             }
+        }
+        if ((strlen(tmpWORD) == sizeword) && (finalcheck == sizeword)) {
+            if (tilda > 0) {
+                printf("%c", '~');
+            }
+            tilda++;
+            for (int k = 0; k < sizeword; k++) {
+                printf("%c", tmpWORD[k]);
+                tmpWORD[k] = "";
+            }
+        }
+        finalcheck = 0;
+
+        if (ch[i] == copy[sizeword - 1]) {                        // in case of flipped WORD
+            for (int k = 0; k < sizeword; k++) {
+                for (int t = 0; t < sizeword + 1; t++) {
+                    if (ch[i + k] == copy[sizeword - t]) {
+                        tmpWORD[ptr] = copy[sizeword - t];
+                        ptr = ptr + 1;
+                    }
+                }
+            }
+            ptr = 0;                                            // reset ptr for the next check
+            if (strlen(tmpWORD) == sizeword) {
+                for (int k = 0; k < sizeword; k++) {
+                    if (tmpWORD[k] == word[sizeword - k - 1]) {
+                        finalcheck++;
+                    }
+                }
+
+                if ((strlen(tmpWORD) == sizeword) && (finalcheck == sizeword)) {
+                    if (tilda > 0) {
+                        printf("%c", '~');
+                    }
+                    tilda++;
+                    for (int k = 0; k < sizeword; k++) {
+                        printf("%c", tmpWORD[k]);
+                        tmpWORD[k] = "";
+                    }
+                }
+            }
+            finalcheck = 0;
         }
     }
 }
 
 int main() {
 
-    char word[WORD] = "Head";
-    //char copy[WORD] = "";
-    //strcpy(copy, word);
-    char ch[TXT] = "Head, shoulders, knees and toes,\n"
-                   "Knees and toes.\n"
-                   "Head, shoulders, knees and toes,\n"
-                   "Knees and toes.\n"
-                   "And eyes, and ears, and mouth, and nose.\n"
-                   "Head, shoulders, knees and toes,\n"
-                   "Knees and toes.~";
-    char *ptrCh = &ch[0];
-    char *ptrWord = &word[0];
-    Anagram(ptrCh, ptrWord);
-    printf("\n");
-
-    char word2[WORD] = "abcd";
-    char ch2[TXT] = "AbcdaBcf74'dsGsxyzw6ab Dc4";
-//
-    char *ptrCh2 = &ch2[0];
-    char *ptrWord2 = &word2[0];
-
+    char word[WORD]={0};
+    char ch[TXT]={0};
+    scanf("%s", word);
+    char tmp;
+    for (int i = 0; i < TXT; i++) {
+        scanf("%c", &tmp);
+        if (tmp == '~') {
+            break;
+        }
+        ch[i] = tmp;
+    }
+    char *ptrCh = &ch;
+    char *ptrWord = &word;
+    printf("Gematria Sequences: ");
     Gimetria(ptrCh, ptrWord);
     printf("\n");
-    //Atbash(ptrCh2, ptrWord2);
-
+    printf("Atbash Sequences: ");
+    Atbash(ptrCh, ptrWord);
+    printf("\n");
+    printf("Anagram Sequences: ");
+    Anagram(ptrCh, ptrWord);
     return 0;
 
 }
