@@ -191,7 +191,7 @@ int Atbash(char *ch, char *word) {
             ptr = 0;                                            // reset ptr for the next check
             if (strlen(tmpWORD) == sizeword) {
                 for (int k = 0; k < sizeword; k++) {
-                    if (tmpWORD[k] == word[sizeword - k - 1]) {
+                    if (tmpWORD[k] == copy[sizeword - k - 1]) {
                         finalcheck++;
                     }
                 }
