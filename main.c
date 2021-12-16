@@ -21,7 +21,7 @@ int Anagram(char *ch, char *word) {
             if (ch[i] == copy[j]) {
                 bool++;
                 enter = 1;
-                copy[j] = "";
+                copy[j] = '\0';
                 break;
             } else {
                 if (ch[i] == ' ') {
@@ -148,9 +148,6 @@ int Atbash(char *ch, char *word) {
     for (int i = 0; i < sizeword; i++) {
         word[i] = MakeItAtbash(word[i]);
     }
-//    for (int i = 0; i < sizech; i++) {
-//        ch[i] = MakeItAtbash(ch[i]);
-//    }
     for (int i = 0; i < sizech; i++) {
         if (ch[i] == word[0]) {
             for (int j = 0; j < sizeword; j++) {
@@ -161,7 +158,7 @@ int Atbash(char *ch, char *word) {
             if (strlen(tmpWORD) == sizeword) {
                 for (int j = 0; j < sizeword; j++) {
                     printf("%c", tmpWORD[j]);
-                    tmpWORD[j] = "";
+                    tmpWORD[j] = '\0';
                 }
             }
         }
@@ -174,7 +171,7 @@ int Atbash(char *ch, char *word) {
             if (strlen(tmpWORD) == sizeword) {
                 for (int j = 0; j < sizeword; j++) {
                     printf("%c", tmpWORD[j]);
-                    tmpWORD[j] = "";
+                    tmpWORD[j] = '\0';
                 }
             }
         }
