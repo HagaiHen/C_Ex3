@@ -28,7 +28,6 @@ int main() {
     printf("\n");
     printf("Anagram Sequences: ");
     Anagram(ptrCh, ptrWord);
-    printf("\n");
     return 0;
 
 }
